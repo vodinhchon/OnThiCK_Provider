@@ -98,6 +98,7 @@ public class AuthorActivity extends AppCompatActivity {
                     } catch (Exception e) {
                         e.printStackTrace();
                         Toast.makeText(getApplicationContext(), "Error ! ID already exists.", Toast.LENGTH_LONG).show();
+                        editTextID.requestFocus();
                     }
                 } else {
                     Toast.makeText(getApplicationContext(), "Please enter full information.", Toast.LENGTH_LONG).show();

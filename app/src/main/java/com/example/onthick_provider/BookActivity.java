@@ -83,7 +83,7 @@ public class BookActivity extends AppCompatActivity {
                 String title = editTextTitle.getText().toString();
                 String[] author = {editTextAuthor.getText().toString()};
                 if (checkEmpty(id, title, author[0])) {
-                    if (checkAuthorForSave(author)) {
+                    if (checkAuthorIsExists(author)) {
                         ContentValues values = new ContentValues();
                         values.put("id_book", id);
                         values.put("title", title);
@@ -133,19 +133,23 @@ public class BookActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String id = editTextID.getText().toString();
                 String title = editTextTitle.getText().toString();
-                String author = editTextAuthor.getText().toString();
-                if (checkEmpty(id, title, author)) {
-                    ContentValues values = new ContentValues();
-                    values.put("id_book", id);
-                    values.put("title", title);
-                    values.put("id_author", author);
-                    int i = getContentResolver().update(uri, values, "id_book=?", new String[]{id});
-                    if (i > 0) {
-                        clean();
-                        selectItem(null, null);
-                        Toast.makeText(getApplicationContext(), "Updated successfully.", Toast.LENGTH_LONG).show();
+                String[] author = {editTextAuthor.getText().toString()};
+                if (checkEmpty(id, title, author[0])) {
+                    if (checkAuthorIsExists(author)) {
+                        ContentValues values = new ContentValues();
+                        values.put("id_book", id);
+                        values.put("title", title);
+                        values.put("id_author", author[0]);
+                        int i = getContentResolver().update(uri, values, "id_book=?", new String[]{id});
+                        if (i > 0) {
+                            clean();
+                            selectItem(null, null);
+                            Toast.makeText(getApplicationContext(), "Updated successfully.", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(BookActivity.this, "Error ! ID is incorrect.", Toast.LENGTH_SHORT).show();
+                        }
                     } else {
-                        Toast.makeText(BookActivity.this, "Error ! ID is incorrect.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Error ! Author's ID does not exists.", Toast.LENGTH_LONG).show();
                     }
                 } else {
                     Toast.makeText(getApplicationContext(), "Please enter full information.", Toast.LENGTH_LONG).show();
@@ -163,7 +167,7 @@ public class BookActivity extends AppCompatActivity {
         });
     }
 
-    private boolean checkAuthorForSave(String[] author) {
+    private boolean checkAuthorIsExists(String[] author) {
         ArrayList<String> list = new ArrayList<String>();
         String URL = "content://com.example.onthick_provider.MyContentProvider_Author/authorPath";
         Uri uri = Uri.parse(URL);
