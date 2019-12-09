@@ -117,6 +117,7 @@ public class AuthorActivity extends AppCompatActivity {
                     if (i > 0) {
                         clean();
                         selectItem(null, null);
+                        deleteBookOfAuthor(id[0]);
                         Toast.makeText(AuthorActivity.this, "Deleted successfully.", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(AuthorActivity.this, "Error ! ID is incorrect.", Toast.LENGTH_SHORT).show();
@@ -126,6 +127,10 @@ public class AuthorActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void deleteBookOfAuthor(String id) {
+
     }
 
     private void eventClickUpdate() {

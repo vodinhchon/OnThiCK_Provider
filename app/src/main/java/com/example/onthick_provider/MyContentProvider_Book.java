@@ -156,5 +156,13 @@ public class MyContentProvider_Book extends ContentProvider {
             db.execSQL(book);
             onCreate(db);
         }
+
+        @Override
+        public void onOpen(SQLiteDatabase db) {
+            super.onOpen(db);
+            if (!db.isReadOnly()) {
+                db.execSQL("PRAGMA foreign_keys=ON");
+            }
+        }
     }
 }
